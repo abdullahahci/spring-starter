@@ -1,1 +1,5 @@
+com/ahci/springstarter/admin/HomeController.class
+com/ahci/springstarter/core/models/User.class
+com/ahci/springstarter/admin/UserController.class
+com/ahci/springstarter/core/repositories/UserRepository.class
 com/ahci/springstarter/SpringStarterApplication.class
