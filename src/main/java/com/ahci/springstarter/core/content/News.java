@@ -1,5 +1,8 @@
 package com.ahci.springstarter.core.content;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,36 +15,66 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
+import com.ahci.springstarter.admin.models.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class News {
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
 
 	@Column(length=32)
-    private String title;
+	private String title;
 
 	@Column(length=64)
-    private String description;
+	private String headline;
 
-    @Column(columnDefinition="text")
-    private String content;
+	@Column(columnDefinition="text")
+	private String content;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "category_news", 
-      joinColumns = @JoinColumn(name = "news_id", referencedColumnName = "id"), 
-      inverseJoinColumns = @JoinColumn(name = "category_id", 
-      referencedColumnName = "id"))
-    private List<Category> categories;
-    
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "news_tag", 
-      joinColumns = @JoinColumn(name = "news_id", referencedColumnName = "id"), 
-      inverseJoinColumns = @JoinColumn(name = "tag_id", 
-      referencedColumnName = "id"))
-    private List<Tag> tags;
-    
+	private String image;
+
+	private String source;
+	
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinTable(name = "category_news", 
+	  joinColumns = @JoinColumn(name = "news_id", referencedColumnName = "id"), 
+	  inverseJoinColumns = @JoinColumn(name = "category_id", 
+	  referencedColumnName = "id"))
+	@JsonManagedReference
+	private List<Category> categories;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "news_tag", 
+	  joinColumns = @JoinColumn(name = "news_id", referencedColumnName = "id"), 
+	  inverseJoinColumns = @JoinColumn(name = "tag_id", 
+	  referencedColumnName = "id"))
+	private List<Tag> tags;
+	
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "created_by", nullable = false)
+	private User createdBy;
+	
+	@UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
+	
+	@CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+	
+	public News() {
+		this.createdAt = this.updatedAt = Calendar.getInstance().getTime();
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -58,12 +91,13 @@ public class News {
 		this.title = title;
 	}
 
-	public String getDescription() {
-		return description;
+	
+	public String getHeadline() {
+		return headline;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setHeadline(String headline) {
+		this.headline = headline;
 	}
 
 	public String getContent() {
@@ -74,6 +108,29 @@ public class News {
 		this.content = content;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public void addCategory(Category category) {
+		if (categories ==null)
+			categories = new ArrayList<Category>();
+		if(!categories.contains(category))
+			categories.add(category);
+	}
+	
 	public List<Category> getCategories() {
 		return categories;
 	}
@@ -82,6 +139,13 @@ public class News {
 		this.categories = categories;
 	}
 
+	public void addTag(Tag tag) {
+		if (tags ==null)
+			tags = new ArrayList<Tag>();
+		if(!tags.contains(tag))
+			tags.add(tag);
+	}
+	
 	public List<Tag> getTags() {	
 		return tags;
 	}
@@ -89,6 +153,30 @@ public class News {
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
-    
-    
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+	
+	
 }

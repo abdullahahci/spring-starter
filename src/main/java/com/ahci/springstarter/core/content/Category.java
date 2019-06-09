@@ -2,7 +2,6 @@ package com.ahci.springstarter.core.content;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,10 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Category {
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     private String title;
@@ -21,8 +22,16 @@ public class Category {
     private String description;
 
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<News> categoryNews;
     
+    public Category() {
+	}
+	public Category(String title, String description) {
+		this.title = title;
+		this.description = description;
+	}
+
 	public Integer getId() {
 		return id;
 	}

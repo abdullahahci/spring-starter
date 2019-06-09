@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.ahci.springstarter.core.content.News;
 
-public interface NewsRepository extends CrudRepository<News, Integer> {
+public interface CoreNewsRepository extends CrudRepository<News, Integer> {
 
 }

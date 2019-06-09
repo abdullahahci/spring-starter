@@ -6,10 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.ahci.springstarter.core.util.Util;
+
 @Entity
 public class Tag {
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
 	@Column(length=32)
@@ -17,6 +19,16 @@ public class Tag {
 	
 	@Column(length=32)
 	private String slug;
+
+	public Tag() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Tag(String tag) {
+		super();
+		this.tag = tag;
+		this.slug = Util.toSlug(tag);
+	}
 
 	public Integer getId() {
 		return id;
@@ -41,7 +53,5 @@ public class Tag {
 	public void setSlug(String slug) {
 		this.slug = slug;
 	}
-	
-	
 	
 }
