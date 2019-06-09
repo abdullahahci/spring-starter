@@ -1,4 +1,4 @@
-package com.ahci.springstarter.admin;
+package com.ahci.springstarter.admin.controllers;
 
 import java.util.ArrayList;
 
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ahci.springstarter.core.models.User;
-import com.ahci.springstarter.core.repositories.UserRepository;
+import com.ahci.springstarter.admin.models.User;
+import com.ahci.springstarter.admin.repositories.UserRepository;
 
 @Controller    // This means that this class is a Controller
 @RequestMapping(path="/admin/users") // This means URL's start with /demo (after Application path)

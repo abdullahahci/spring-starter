@@ -1,4 +1,4 @@
-package com.ahci.springstarter.core.models;
+package com.ahci.springstarter.admin.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
