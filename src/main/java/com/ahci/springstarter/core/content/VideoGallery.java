@@ -7,7 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Gallery {
+public class VideoGallery {
+
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
@@ -36,6 +37,4 @@ public class Gallery {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-    
-    
 }

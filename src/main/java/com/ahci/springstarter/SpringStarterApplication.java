@@ -1,10 +1,8 @@
 package com.ahci.springstarter;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,58 +19,51 @@ import com.ahci.springstarter.core.repositories.TagRepository;
 
 @SpringBootApplication
 public class SpringStarterApplication {
-	@Autowired
-	private CategoryRepository catRep;
-	public static void main(String[] args) {
-		SpringApplication.run(SpringStarterApplication.class, args);
-		
-	}
-	
-	@Bean
-	public CommandLineRunner categoryRunner(CategoryRepository repository) {
-		return (args) -> {
-			// save a couple of customers
-			repository.save(new Category("Spor", "Spor"));
-			repository.save(new Category("Ekonomi", "Ekonomi"));
-			repository.save(new Category("Siyaset", "Siyaset"));
-			repository.save(new Category("Guncel", "Guncel"));
 
-		};
+	public static void main(String[] args) {
+		
+		SpringApplication.run(SpringStarterApplication.class, args);
 	}
 	
+	
 	@Bean
-	public CommandLineRunner userRunner(UserRepository repository) {
+	public CommandLineRunner newsRunner(CoreNewsRepository repository, 
+										CategoryRepository catRepository,
+										UserRepository userRepository,
+										TagRepository tagRepository) {
 		return (args) -> {
-			// save a couple of customers
+			System.out.println("Saving Categories");
+			// save a couple of Category
+			catRepository.save(new Category("Spor", "Spor"));
+			catRepository.save(new Category("Ekonomi", "Ekonomi"));
+			catRepository.save(new Category("Siyaset", "Siyaset"));
+			catRepository.save(new Category("Guncel", "Guncel"));
+			
+			
+
+			System.out.println("Saving Users");
+			userRepository.save(new User("Admin", "admin", "admin", "admin"));
+			// save a couple of User
 			for(int i=0; i<5; i++) {
 				String name = generateString(new SecureRandom(), SOURCES, 15);
 				String email = generateString(new SecureRandom(), SOURCES, 15);
 				String username = generateString(new SecureRandom(), SOURCES, 15);
 				String password = generateString(new SecureRandom(), SOURCES, 15);
 				
-				repository.save(new User(name, email, username, password));
+				userRepository.save(new User(name, email, username, password));
 			}
-		};
-	}
-
-	@Bean
-	public CommandLineRunner tagRunner(TagRepository repository) {
-		return (args) -> {
-			// save a couple of customers
-			for(int i=0; i<5; i++) {
-				repository.save(new Tag(generateString(new SecureRandom(), SOURCES, 15)));
-			}
-		};
-	}
-	
-	@Bean
-	public CommandLineRunner newsRunner(CoreNewsRepository repository, 
-										CategoryRepository catRepository,
-										UserRepository userRepository) {
-		return (args) -> {
-			// save a couple of customers
-			Random rand = new Random();
 			
+
+			System.out.println("Saving Tag");
+			// save a couple of Tag
+			for(int i=0; i<5; i++) {
+				tagRepository.save(new Tag(generateString(new SecureRandom(), SOURCES, 15)));
+			}
+			
+			Random rand = new Random();
+
+			System.out.println("Saving News");
+			// save a couple of News
 			for(int i=0; i<5; i++) {
 				News news = new News();
 				news.setTitle(generateString(new SecureRandom(), SOURCES, 15));

@@ -1,14 +1,16 @@
 package com.ahci.springstarter.core.content;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Video {
-
+public class PhotoGallery {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
@@ -19,6 +21,9 @@ public class Video {
 	@Column(length=64)
     private String description;
     
+	@OneToMany(mappedBy="gallery")
+	List<Image> imageList;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -37,4 +42,6 @@ public class Video {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+    
+    
 }

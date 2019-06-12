@@ -25,7 +25,28 @@
 						</div>
 					</div>
 					<div class="portlet-body">
-					Deneme
+					<table class="table table-bordered table-striped table-condensed flip-content">
+						<thead class="flip-content">
+							<tr>
+								<th>ID</th>
+								<th>Baslik</th>
+								<th>Ekleyen</th>
+								<th>Olusturulma Tarihi</th>
+								<th>Guncellenme Tarihi</th>
+							</tr>
+						</thead>
+						<tbody>
+						<th:block th:each="news : ${newsList}">
+						    <tr>
+						        <td th:text="${news.id}"></td>
+						        <td th:text="${news.title}"></td>
+						        <td th:text="${news.createdBy.name}"></td>
+						        <td th:text="${news.createdAt}"></td>
+						        <td th:text="${news.updatedAt}"></td>
+						    </tr>
+						</th:block>
+						</tbody>
+					</table>
 					</div>
 				</div>
 			</div>

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
-public class HomeController {
+public class HomeController extends BaseController {
 	@RequestMapping("/")
 	public String showForm(Model theModel) {
 
