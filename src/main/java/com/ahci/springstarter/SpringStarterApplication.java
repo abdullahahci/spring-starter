@@ -68,8 +68,8 @@ public class SpringStarterApplication {
 				News news = new News();
 				news.setTitle(generateString(new SecureRandom(), SOURCES, 15));
 				news.setContent(generateString(new SecureRandom(), SOURCES, 300));
-				news.setImage(generateString(new SecureRandom(), SOURCES, 15)+".jpeg");
-				news.setHeadline(generateString(new SecureRandom(), SOURCES, 30));
+				news.setImage("dummy-"+(rand.nextInt(4)+1)+".jpg");
+				news.setSpot(generateString(new SecureRandom(), SOURCES, 30));
 				
 				Category cat = catRepository.findById(rand.nextInt(4)+1).get();
 				news.addCategory(cat);

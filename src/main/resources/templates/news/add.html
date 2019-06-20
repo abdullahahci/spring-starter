@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:include="layout/header.html :: site_header(page_title=#{news.title.add},page_description=#{news.description.add})"></th:block>
+</head>
+<body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
+	<th:block th:include="layout/header.html :: page_header"></th:block>
+
+	<div class="page-container">
+		<th:block th:include="layout/menu.html :: site_menu"></th:block>
+		<!-- BEGIN CONTENT -->
+		<div class="page-content-wrapper">
+			<!-- BEGIN CONTENT BODY -->
+			<div class="page-content">
+				<div th:replace="layout/content.html :: content_header"></div>
+				<div class="portlet light portlet-fit bordered">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-user font-green"></i>
+							<span class="caption-subject bold font-green"
+								th:text="#{news.title.add}"> </span>
+							<div class="caption-desc font-grey-cascade"
+								th:text="#{news.description.add}">  
+							</div>
+						</div>
+					</div>
+					<div class="portlet-body form">
+						<form id="addNewsForm" th:action="@{/admin/news/add}" th:object="${news}" 
+							class="form-horizontal form-row-seperated" method="post">
+							<div class="form-body">
+								<div class="form-group">
+									<label class="control-label col-md-2" th:text="#{label.title}"></label>
+									<div class="col-md-8">
+										<input type="text" placeholder="small" class="form-control" th:field="*{title}"/>
+										<span class="help-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+									</div>
+								</div>
+							</div>
+							<div class="form-body">
+								<div class="form-group">
+									<label class="control-label col-md-2" th:text="#{label.spot}"></label>
+									<div class="col-md-8">
+										<input type="text" placeholder="small" class="form-control" th:field="*{spot}"/>
+										<span class="help-block" th:if="${#fields.hasErrors('spot')}" th:errors="*{spot}"></span>
+									</div>
+								</div>
+							</div>
+							<div class="form-body">
+								<div class="form-group last">
+									<label class="control-label col-md-2" th:text="#{label.content}"></label>
+									<div class="col-md-8">
+										<input type="hidden" name="content" th:field="*{content}"/>
+										<div id="contentText" th:text="${news.content}"> </div>
+										<span class="help-block" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-body">
+								<div class="form-group">
+									<label class="control-label col-md-2" th:text="#{label.source}"></label>
+									<div class="col-md-8">
+										<input type="text" placeholder="small" class="form-control" th:field="*{source}"/>
+										<span class="help-block" th:if="${#fields.hasErrors('source')}" th:errors="*{source}"></span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-actions right">
+								<div class="row">
+									<div class="col-md-offset-3 col-md-7">
+										<button type="button" class="btn default">Cancel</button>
+										<button type="submit" class="btn green">
+											<i class="fa fa-save"></i> Save</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- END CONTENT BODY -->
+		</div>
+		<!-- END CONTENT -->
+	</div>
+	<th:block th:include="layout/footer.html :: footer"></th:block>
+	<script>
+		$(document).ready(function(){
+			$("#contentText").summernote({height:300})
+			$("#addNewsForm").submit(function(){
+				$("#content").val($("#contentText").summernote('code'));
+			});
+			
+			
+		});
+	</script>
+</body>
+</html>

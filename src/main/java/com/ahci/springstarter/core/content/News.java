@@ -35,7 +35,7 @@ public class News {
 	private String title;
 
 	@Column(length=64)
-	private String headline;
+	private String spot;
 
 	@Column(columnDefinition="text")
 	private String content;
@@ -91,13 +91,12 @@ public class News {
 		this.title = title;
 	}
 
-	
-	public String getHeadline() {
-		return headline;
+	public String getSpot() {
+		return spot;
 	}
 
-	public void setHeadline(String headline) {
-		this.headline = headline;
+	public void setSpot(String spot) {
+		this.spot = spot;
 	}
 
 	public String getContent() {
