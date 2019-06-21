@@ -21,6 +21,8 @@
 		<script src="/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 		<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
 		<script src="/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
+		<script src="/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+		
 		<!-- END CORE PLUGINS -->
 		<!-- BEGIN PAGE LEVEL PLUGINS -->
 		<script src="/plugins/ladda/spin.min.js" type="text/javascript"></script>
@@ -37,6 +39,15 @@
 		<script src="/js/demo.min.js" type="text/javascript"></script>
 		<script src="/js/quick-sidebar.min.js" type="text/javascript"></script>
 		<script src="/js/quick-nav.min.js" type="text/javascript"></script>
+		<script src="/js/main.js" type="text/javascript"></script>
+		<script th:if="${success_message}">
+			var message = '[[${success_message}]]';
+			toastr.success(message)
+		</script>
+		<script th:if="${error_message}">
+			var message = '[[${success_message}]]';
+			toastr.error(message)
+		</script>
 	</div>
 	<div th:fragment="fileupload">
 		

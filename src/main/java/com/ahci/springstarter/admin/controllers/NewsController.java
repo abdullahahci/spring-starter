@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ahci.springstarter.admin.models.User;
 import com.ahci.springstarter.admin.repositories.AdminNewsRepository;
@@ -69,7 +70,7 @@ public class NewsController extends BaseController {
 	// Display add member form
 	@GetMapping(value = "/add")
 	public String addNewsForm(News news) {
-		news.setContent("Some random content <b> with bold</bold>");
+		news.setContent("Some random content <b> with bold</b>");
 //	    model.addAttribute("news", new News());
 
 	    return "news/add";
@@ -77,15 +78,16 @@ public class NewsController extends BaseController {
 
 	// Process add member form
 	@PostMapping(value = "/add")
-	public String addNews(@Valid News news, BindingResult result, Model model) {
+	public String addNews(@Valid News news, BindingResult result, Model model, RedirectAttributes attributes) {
 		if (result.hasErrors()) {
-            return "add-user";
+            return "news/add";
         }
 		User user = userRepository.findById(1).get();
 		news.setCreatedBy(user);
 		
+		attributes.addFlashAttribute("success_message", getMessage("news.operationAdd.success"));
 		newsRepository.save(news);
-        return "redirect:";
+        return "redirect:/admin/news/";
 	}
 
 	// Display edit member form

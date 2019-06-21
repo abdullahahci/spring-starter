@@ -18,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -30,11 +31,13 @@ public class News {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-
+	
 	@Column(length=32)
+	@NotEmpty(message = "{title.notempty}")
 	private String title;
 
 	@Column(length=64)
+	@NotEmpty(message = "{spot.notempty}")
 	private String spot;
 
 	@Column(columnDefinition="text")

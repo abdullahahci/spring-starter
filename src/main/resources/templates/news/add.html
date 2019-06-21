@@ -28,7 +28,7 @@
 						<form id="addNewsForm" th:action="@{/admin/news/add}" th:object="${news}" 
 							class="form-horizontal form-row-seperated" method="post">
 							<div class="form-body">
-								<div class="form-group">
+								<div class="form-group" th:classappend="${#fields.hasErrors('title')} ? 'has-error'">
 									<label class="control-label col-md-2" th:text="#{label.title}"></label>
 									<div class="col-md-8">
 										<input type="text" placeholder="small" class="form-control" th:field="*{title}"/>
@@ -37,7 +37,7 @@
 								</div>
 							</div>
 							<div class="form-body">
-								<div class="form-group">
+								<div class="form-group"  th:classappend="${#fields.hasErrors('spot')} ? 'has-error'">
 									<label class="control-label col-md-2" th:text="#{label.spot}"></label>
 									<div class="col-md-8">
 										<input type="text" placeholder="small" class="form-control" th:field="*{spot}"/>
@@ -50,7 +50,7 @@
 									<label class="control-label col-md-2" th:text="#{label.content}"></label>
 									<div class="col-md-8">
 										<input type="hidden" name="content" th:field="*{content}"/>
-										<div id="contentText" th:text="${news.content}"> </div>
+										<div id="contentText" th:utext="${news.content}"> </div>
 										<span class="help-block" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
 									</div>
 								</div>
