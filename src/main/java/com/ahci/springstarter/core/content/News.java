@@ -1,8 +1,6 @@
 package com.ahci.springstarter.core.content;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,19 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-
-import com.ahci.springstarter.admin.models.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class News {
+//@DynamicUpdate
+//@EntityListeners(AuditingEntityListener.class)
+public class News extends BaseContent<String>{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
@@ -62,20 +55,20 @@ public class News {
 	  referencedColumnName = "id"))
 	private List<Tag> tags;
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "created_by", nullable = false)
-	private User createdBy;
+//	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+//	@JoinColumn(name = "created_by", nullable = false)
+//	private User createdBy;
 	
-	@UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-	private Date updatedAt;
-	
-	@CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+//	@UpdateTimestamp
+//    @Temporal(TemporalType.TIMESTAMP)
+//	private Date updatedAt;
+//	
+//	@CreatedDate
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date createdAt;
 	
 	public News() {
-		this.createdAt = this.updatedAt = Calendar.getInstance().getTime();
+//		this.createdAt = this.updatedAt = Calendar.getInstance().getTime();
 	}
 	
 	public Integer getId() {
@@ -156,29 +149,31 @@ public class News {
 		this.tags = tags;
 	}
 
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public User getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(User createdBy) {
-		this.createdBy = createdBy;
-	}
+	
+	
+//	public Date getUpdatedAt() {
+//		return updatedAt;
+//	}
+//
+//	public void setUpdatedAt(Date updatedAt) {
+//		this.updatedAt = updatedAt;
+//	}
+//
+//	public Date getCreatedAt() {
+//		return createdAt;
+//	}
+//
+//	public void setCreatedAt(Date createdAt) {
+//		this.createdAt = createdAt;
+//	}
+//
+//	public User getCreatedBy() {
+//		return createdBy;
+//	}
+//
+//	public void setCreatedBy(User createdBy) {
+//		this.createdBy = createdBy;
+//	}
 	
 	
 }

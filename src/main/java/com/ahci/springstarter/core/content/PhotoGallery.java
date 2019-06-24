@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class PhotoGallery {
+public class PhotoGallery extends BaseContent<String> {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;

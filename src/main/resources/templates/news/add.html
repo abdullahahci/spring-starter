@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<th:block th:include="layout/header.html :: site_header(page_title=#{news.title.add},page_description=#{news.description.add})"></th:block>
+	<th:block th:include="layout/header.html :: site_header(page_title=#{news.title.add},
+		page_description=#{news.description.add})"></th:block>
 </head>
 <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
 	<th:block th:include="layout/header.html :: page_header"></th:block>
@@ -25,7 +26,7 @@
 						</div>
 					</div>
 					<div class="portlet-body form">
-						<form id="addNewsForm" th:action="@{/admin/news/add}" th:object="${news}" 
+						<form id="newsForm" th:action="@{/admin/news/add}" th:object="${news}" 
 							class="form-horizontal form-row-seperated" method="post">
 							<div class="form-body">
 								<div class="form-group" th:classappend="${#fields.hasErrors('title')} ? 'has-error'">
@@ -87,11 +88,9 @@
 	<script>
 		$(document).ready(function(){
 			$("#contentText").summernote({height:300})
-			$("#addNewsForm").submit(function(){
+			$("#newsForm").submit(function(){
 				$("#content").val($("#contentText").summernote('code'));
 			});
-			
-			
 		});
 	</script>
 </body>

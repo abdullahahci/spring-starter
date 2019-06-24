@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="layout/header.html :: site_header(page_title=#{error.404.title},
+		page_description=#{error.404.message})"></th:block>
+</head>
+<body
+	class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
+	<th:block th:include="layout/header.html :: page_header"></th:block>
+	<link href="/css/error.min.css" rel="stylesheet" type="text/css" />
+	<div class="page-container">
+		<th:block th:include="layout/menu.html :: site_menu"></th:block>
+		<!-- BEGIN CONTENT -->
+		<div class="page-content-wrapper">
+			<!-- BEGIN CONTENT BODY -->
+			<div class="page-content">
+				<div class="row">
+					<div class="col-md-12 page-404">
+						<div class="number font-green">404</div>
+						<div class="details">
+							<h3 th:text="#{error.404.title}"></h3>
+							<p th:text="#{error.404.message}"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END CONTENT BODY -->
+		</div>
+		<!-- END CONTENT -->
+	</div>
+	<th:block th:replace="layout/footer.html :: footer"></th:block>
+</body>
+</html>

@@ -2,7 +2,6 @@ package com.ahci.springstarter.admin.controllers;
 
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ahci.springstarter.admin.exceptions.ContentNotFoundException;
 import com.ahci.springstarter.admin.models.User;
 import com.ahci.springstarter.admin.repositories.AdminNewsRepository;
 import com.ahci.springstarter.admin.repositories.UserRepository;
@@ -54,7 +54,7 @@ public class NewsController extends BaseController {
 //        return "saved";
 //	}
 
-	@GetMapping(path="/")
+	@GetMapping(path="")
 	public String index(Model model) {
 		// This returns a JSON or XML with the users
 		ArrayList<News> newsList = new ArrayList<News>();
@@ -82,8 +82,8 @@ public class NewsController extends BaseController {
 		if (result.hasErrors()) {
             return "news/add";
         }
-		User user = userRepository.findById(1).get();
-		news.setCreatedBy(user);
+//		User user = userRepository.findById(1).get();
+//		news.setCreatedBy(user);
 		
 		attributes.addFlashAttribute("success_message", getMessage("news.operationAdd.success"));
 		newsRepository.save(news);
@@ -93,28 +93,27 @@ public class NewsController extends BaseController {
 	// Display edit member form
 	@RequestMapping(value = "{id}/edit", method = RequestMethod.GET)
 	public String showEditNewsForm(Model model, @PathVariable int id) {
-
-	    model.addAttribute("news", newsRepository.findById(id).get());
-
+		News news = newsRepository.findById(id)
+			      .orElseThrow(() -> new ContentNotFoundException("Invalid news Id:" + id));
+		
+		model.addAttribute("news", news);
+		
 	    return "news/edit";
 	}
 
 	// Process edit member form
 	@RequestMapping(value = "{id}/edit", method = RequestMethod.POST)
-	public String updateNews(@PathVariable int id, 
-	        HttpServletRequest request, News member) {
+	public String updateNews(@PathVariable int id, @Valid  News news, 
+			  BindingResult result, Model model) {
 
-	    // Uncommenting the next line of code sets the member objects forename attribute
-	    // to "test forename"
-	    // member.setForename("test forename");
-
-	    // Uncommenting the next line of code gives the following error:
-	    // HTTP Status 405 - Request method 'POST' not supported
-	    //member.setSurname(request.getParameter("surname"));
-
-//	    memberService.updateNews(member);
-
-	    return "redirect:/news/";
+		if (result.hasErrors()) {
+			news.setId(id);
+	        return "news/edit";
+	    }
+		
+		newsRepository.save(news);
+		
+	    return "redirect:/admin/news/";
 	}
 	
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST, produces = "application/json")

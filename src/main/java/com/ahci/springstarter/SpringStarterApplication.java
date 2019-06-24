@@ -74,8 +74,8 @@ public class SpringStarterApplication {
 				Category cat = catRepository.findById(rand.nextInt(4)+1).get();
 				news.addCategory(cat);
 				
-				User user = userRepository.findById(1).get();
-				news.setCreatedBy(user);
+//				User user = userRepository.findById(1).get();
+//				news.setCreatedBy(user);
 				for(int j=rand.nextInt(4)+1; j>0; j--) {
 					news.addTag(new Tag(generateString(new SecureRandom(), SOURCES, 15)));
 				}

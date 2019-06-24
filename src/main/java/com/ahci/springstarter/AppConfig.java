@@ -3,15 +3,17 @@ package com.ahci.springstarter;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
+import com.ahci.springstarter.core.util.AuditorAwareImpl;
 
 @Configuration
 //@ImportResource( {"classpath*:/rest_config.xml" } )
@@ -64,5 +66,17 @@ public class AppConfig{
 	@Bean
 	public StandardServletMultipartResolver multipartResolver() {
 	    return new StandardServletMultipartResolver();
+	}
+	
+	
+	
+	/* For audit */
+	@Configuration
+	@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+	public class JpaConfig {
+	    @Bean
+	    public AuditorAware<String> auditorAware() {
+	        return new AuditorAwareImpl();
+	    }
 	}
 }

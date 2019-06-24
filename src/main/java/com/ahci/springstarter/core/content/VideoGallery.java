@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class VideoGallery {
+public class VideoGallery extends BaseContent<String> {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)

@@ -12,9 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.ahci.springstarter.admin.exceptions.ContentNotFoundException;
 
 @ControllerAdvice
 public class ErrorController extends ResponseEntityExceptionHandler {
@@ -44,5 +47,17 @@ public class ErrorController extends ResponseEntityExceptionHandler {
 		
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+	}
+	
+	@ExceptionHandler(ContentNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public String handle404Exceptions(Exception e) {
+		return "404"; 
+	}
+	
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public String handleAllExceptions(Exception e) {
+		return "500"; 
 	}
 }
